@@ -1,6 +1,6 @@
 clear
 clc
-I=rgb2gray(imread('C:\Users\aham shubham\Desktop\scan0001.jpg'));  %path of the saved OMR sheet image
+I=rgb2gray(imread('home/abhi/Desktop/scan0001.jpg'));  %path of the saved OMR sheet image
 str='ABCDE';                                                                      %options marked in the sheet
 str2='';
 startx=363;starty=252;           %coordinates of the left most corner of the first choice box
@@ -78,17 +78,42 @@ for i=1:50                                             %this loop runs for all t
     m=0;
     for j=1:5                                            %this loop corresponds to each of the five choice boxes in a row
     if(c(i,j)==0)                                     %if the corresponding choice is marked, print it out
-        str2=[str2 ' ' str(j)];
+        str2=[str2 '' str(j)];
     else
         m=m+1;
     end
     end
     if(m==5)                                           %if no choice is marked, print NONE
-        str2=[str2 ' NONE'];
+        str2=[str2 '0'];
     end
 end
 subplot(1,2,1)
 imshow(mark)
 subplot(1,2,2)
 imshow(c)
-str2
+str2;
+str3=['B','A','D','C','A','D','C','B','A','D','C','B','B','C','D','C','B','D','B','C','D','C','A','D','C','B','C','D','C','B','C','B','C','B','D','C','B','C','D','C','B','A','A','D','C','B','A','D','C','B'];
+mark1=0;
+ccount=0;
+wcount=0;
+uncount=0;
+for i=1:50
+    if str2(i)==str3(i)
+        mark1=mark1+3;
+        ccount=ccount+1;
+    else if str2(i)=='0'
+        mark1=mark1+0;
+        uncount=uncount+1;
+        else if str2(i)~=str3(i)
+        mark1=mark1-1;
+        wcount=wcount+1;
+            end
+        end
+    end
+end
+Correct = ccount;
+Wrong = wcount;
+Unattempted = uncount;
+Marks = mark1;
+table(Correct, Wrong, Unattempted, Marks)
+
